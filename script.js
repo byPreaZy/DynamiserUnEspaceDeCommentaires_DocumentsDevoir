@@ -4,14 +4,18 @@ const commentList = document.querySelector('#comment-list');
 const errorMessage = document.querySelector('#error-message');
 
 // Écouter l'événement de soumission du formulaire
-commentForm.addEventListener('submit', function(event) {
+commentForm.addEventListener('submit', handleSubmit);
+
+// Fonction pour gérer la soumission du formulaire
+function handleSubmit(event) {
     // Empêcher le rechargement de la page
     event.preventDefault();
 
     // Récupérer les valeurs des champs du formulaire
-    const firstName = document.querySelector('#first-name').value;
-    const lastName = document.querySelector('#last-name').value;
-    const message = document.querySelector('#message').value;
+    const formData = new FormData(commentForm);
+    const firstName = formData.get('first-name');
+    const lastName = formData.get('last-name');
+    const message = formData.get('message');
 
     // Vérifier si tous les champs sont remplis
     if (firstName && lastName && message) {
@@ -30,7 +34,7 @@ commentForm.addEventListener('submit', function(event) {
         // Afficher le message d'erreur
         errorMessage.style.display = 'block';
     }
-});
+}
 
 // Fonction pour créer un nouvel élément de commentaire
 function createCommentElement(firstName, lastName, message) {
